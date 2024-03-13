@@ -10,7 +10,7 @@ export const POST: APIRoute = async ({ request }) => {
   const mailgun = new Mailgun(FormData);
   const mg = mailgun.client({
     username: 'api',
-    key: import.meta.env.MAILGUN_API_KEY || 'API-KEY',
+    key: import.meta.env.MAILGUN_API_KEY || 'MAILGUN_API_KEY',
   });
 
   console.log(name, email, message);
@@ -26,11 +26,11 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const resp = await mg.messages.create(import.meta.env.MAILGUN_EMAIL || 'EMAIL', {
-      from: `mailgun@${import.meta.env.MAILGUN_EMAIL || 'EMAIL'}`,
-      to: 'kraghuranish@gmail.com',
-      subject: 'Hello World!',
-      text: `${name}\n${email}\n${message}\n`,
+    const resp = await mg.messages.create(import.meta.env.MAILGUN_EMAIL || 'MAILGUN_EMAIL', {
+      from: `mailgun@${import.meta.env.MAILGUN_EMAIL || 'MAILGUN_EMAIL'}`,
+      to: import.meta.env.RECIPIENT_EMAIL || 'RECIPIENT_EMAIL',
+      subject: 'Contact from Tripath Website',
+      text: `${name} ; ${email}\n\n${message}\n`,
     });
 
     console.log(resp);

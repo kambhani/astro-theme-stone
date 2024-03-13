@@ -24,6 +24,7 @@ const { description, title } = Astro.props;
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <title>{title}</title>
     <ViewTransitions />
   </head>
@@ -42,33 +43,29 @@ const { description, title } = Astro.props;
     </style>
     <script>
       import Alpine from 'alpinejs';
-      import collapse from '@alpinejs/collapse';
+      document.addEventListener("alpine:init", () => {
 
-      Alpine.plugin(collapse);
+        Alpine.store('theme', {
+          isDark: false,
 
-      Alpine.store('theme', {
-        init() {
-          this.isDark = (() => {
-            if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-              return localStorage.getItem('theme') === 'dark';
-            }
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-              return true;
-            }
-            return false;
-          })();
-        },
+          init() {
+            this.isDark = (() => {
+              if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                return localStorage.getItem('theme') === 'dark';
+              }
+              if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return true;
+              }
+              return false;
+            })();
+          },
 
-        isDark: false,
-
-        toggle() {
-          this.isDark = !this.isDark;
-          localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
-        },
+          toggle() {
+            this.isDark = !this.isDark;
+            localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
+          },
+        });
       });
-
-      window.Alpine = Alpine;
-      Alpine.start();
     </script>
   </body>
 </html>

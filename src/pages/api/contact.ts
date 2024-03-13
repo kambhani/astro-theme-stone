@@ -7,7 +7,6 @@ export const POST: APIRoute = async ({ request }) => {
   const message = data.get('message');
 
   console.log(name, email, message);
-  console.log('asdasdf');
 
   // Validate the data - you'll probably want to do more than this
   if (!name || !email || !message) {

@@ -65,6 +65,25 @@ const { description, title } = Astro.props;
             localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
           },
         });
+
+        Alpine.data("contact", () => ({
+          submitted: false,
+          text: "",
+          ok: false,
+
+          async submit(e: any) {
+            const formData = new FormData(e.target);
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              body: formData,
+            });
+            const data = await response.json();
+            this.ok = response.ok;
+            console.log(response.ok);
+            this.submitted = true;
+            this.text = data.message ?? "Message not sent"
+          },
+        }));
       });
     </script>
   </body>

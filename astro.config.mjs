@@ -8,5 +8,5 @@ import alpine from '@astrojs/alpinejs';
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
-  integrations: [tailwind(), compress(), alpine()],
+  integrations: [alpine(), tailwind(), compress()],
 });
